@@ -3,6 +3,7 @@ import CustomOption from "../CustomOption";
 import { currencyOptions } from "../../data/currencies";
 
 export default function CurrencySelection({value,onChange}) {
+
   return (
     <Select
       options={currencyOptions}
@@ -10,6 +11,7 @@ export default function CurrencySelection({value,onChange}) {
       getOptionValue={(option) => option.value}
       value={value}
       onChange={onChange}
+      isSearchable={true} // 开启搜索功能
       styles={{
         control: (base) => ({
           ...base,

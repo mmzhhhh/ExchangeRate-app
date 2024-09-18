@@ -10,6 +10,7 @@ function App() {
   const [currencyOptions2, setCurrencyOptions2] = useState(null);
   const [currencyAmount1, setCurrencyAmount1] = useState("");
   const [currencyAmount2, setCurrencyAmount2] = useState("");
+  console.log(currencyOptions1);
 
   //获取汇率
   const fetchCurrencyRates = async () => {
@@ -19,6 +20,7 @@ function App() {
       );
       const data = await response.json();
       //const apiTest = data.conversion_rates;
+      //setCurrencyRates(apiTest);
       setCurrencyRates(data.conversion_rates);
     } catch (error) {
       console.log(error);
@@ -41,8 +43,8 @@ function App() {
   const convertCurrency = (amount, fromCurrency, toCurrency) => {
     if (!currencyRates || !fromCurrency || !toCurrency) return;
 
-    const rateFrom = currencyRates[fromCurrency.value]; //获取货币一的汇率
-    const rateTo = currencyRates[toCurrency.value]; //获取货币二的汇率
+    const rateFrom = currencyRates[fromCurrency.value.replace(/[\u4e00-\u9fa5]/g, '').trim()]; //获取货币一的汇率
+    const rateTo = currencyRates[toCurrency.value.replace(/[\u4e00-\u9fa5]/g, '').trim()]; //获取货币二的汇率
 
     const convertedAmount = (amount * rateTo) / rateFrom; //计算转换后的货币
     setCurrencyAmount2(convertedAmount.toFixed(2));
@@ -55,6 +57,8 @@ function App() {
     setCurrencyOptions2(temp);
   };
 
+  
+
   return (
     <Flex
       direction={"column"}
@@ -65,8 +69,9 @@ function App() {
       bg={"gray.500"}
     >
       <Flex
+        mt={"2rem"}
         flexDirection={"column"}
-        maxWidth={"430px"}
+        width={"430px"}
         height={"700px"}
         mx={"1rem"}
         border={"3px solid black"}
